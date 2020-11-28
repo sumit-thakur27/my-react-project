@@ -29,7 +29,11 @@
   box-shadow: 0px 0px 0px 0px #fff;
   background: linear-gradient(#b43a01, #eb5803, #f07128);
 }
-
+@media screen and (max-width:600px){
+  .employee{
+    width:96%;
+  }
+}
 /* .change_content::after {
   content: "";
   position: absolute;
