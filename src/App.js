@@ -1,45 +1,61 @@
 import React from 'react';
 import Employee from './employee/employee'
 import './App.css'
-class Code extends React.Component {
+class Frist_component extends React.Component {
   state = {
-    emp: [
-      { name: "Sumit", age: "19" },
-      { name: "Rahul", age: "20" },
-      { name: "Arjun", age: "25" }
+    exp: [
+      { eid: "1001", name: "sumit", age: "19" },
+      { eid: "1002", name: "shiva", age: "22" },
+      { eid: "1003 ", name: "shyam", age: "24" }
     ],
-    cont: true
+    hide: true
+  }
+  del = (i) => {
+    const Copy = [...this.state.exp]
+    Copy.splice(i, 1)
+    this.setState({ exp: Copy })
+  }
+  change = (event, id) => {
+    const Copy = [...this.state.exp]
+    const i = Copy.findIndex((e) => {
+      return e.eid === id;
+    });
+    const em = Copy[i];
+    em.name = event.target.value;
+    Copy[i] = em;
+    this.setState({ exp: Copy })
+
   }
   hide_show = () => {
-    const v = this.state.cont
-    this.setState({ cont: !v })
-  }
-  Change = (event) => {
-    this.setState({
-      emp: [
-        { name: "Sumit", age: "19" },
-        { name: event.target.value, age: "20" },
-        { name: "Arjun", age: "25" }
-      ]
-    })
+    const v = this.state.hide;
+    this.setState({ hide: !v })
   }
   render() {
-    let Employ = null;
-    if (this.state.cont) {
-      Employ = (
-        <div className="App">
-          <Employee name={this.state.emp[0].name} age={this.state.emp[0].age} />
-          <Employee name={this.state.emp[1].name} age={this.state.emp[1].age} Change={this.Change} />
-          <Employee name={this.state.emp[2].name} age={this.state.emp[2].age} />
-        </div>
+    let employee_null = null;
+    if (this.state.hide) {
+      employee_null = (
+        < div className="App" >
+          {
+            this.state.exp.map((e, i) => {
+              return (
+                <Employee
+                  name={e.name}
+                  age={e.age}
+                  clk={() => this.del(i)}
+                  chg={(event) => this.change(event, e.eid)}
+                  key={e.eid} />
+              )
+            })
+          }
+        </div >
       )
     }
     return (
       <div>
-        <button type="button" onClick={this.hide_show} className="change_content">Hide and Show </button>
-        {Employ}
-      </div>
+        <button type="button" onClick={this.hide_show} className="change_content">Hide and Show</button>
+        { employee_null}
+      </div >
     )
   }
 }
-export { Code }
+export default Frist_component
